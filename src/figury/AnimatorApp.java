@@ -35,10 +35,7 @@ public class AnimatorApp extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 * @param delay 
-	 */
+
 	public AnimatorApp() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -74,7 +71,7 @@ public class AnimatorApp extends JFrame {
 				kanwa.animate();
 			}
 		});
-		btnAnimate.setBounds(100, 239, 80, 23);
+		btnAnimate.setBounds(100, 239, 150, 23);
 		contentPane.add(btnAnimate);
 		
 	}
