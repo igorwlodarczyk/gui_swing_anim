@@ -39,14 +39,14 @@ public class AnimatorApp extends JFrame {
 	public AnimatorApp() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-		int ww = 450, wh = 300;
+		int ww = 700, wh = 550;
 		setBounds((screen.width-ww)/2, (screen.height-wh)/2, ww, wh);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		AnimPanel kanwa = new AnimPanel();
-		kanwa.setBounds(10, 11, 422, 219);
+		kanwa.setBounds(10, 11, 600, 450);
 		contentPane.add(kanwa);
 		SwingUtilities.invokeLater(new Runnable() {
 			
@@ -62,7 +62,7 @@ public class AnimatorApp extends JFrame {
 				kanwa.addFig();
 			}
 		});
-		btnAdd.setBounds(10, 239, 80, 23);
+		btnAdd.setBounds(10, 470, 80, 23);
 		contentPane.add(btnAdd);
 		
 		JButton btnAnimate = new JButton("Animate");
@@ -71,8 +71,26 @@ public class AnimatorApp extends JFrame {
 				kanwa.animate();
 			}
 		});
-		btnAnimate.setBounds(100, 239, 150, 23);
+		btnAnimate.setBounds(100, 470, 120, 23);
 		contentPane.add(btnAnimate);
+
+		JButton btnSpeedUp = new JButton("Speed up");
+		btnSpeedUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				kanwa.speedUp();
+			}
+		});
+		btnSpeedUp.setBounds(230, 470, 120, 23);
+		contentPane.add(btnSpeedUp);
+
+		JButton slowDown = new JButton("Slow down");
+		slowDown.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				kanwa.slowDown();
+			}
+		});
+		slowDown.setBounds(360, 470, 120, 23);
+		contentPane.add(slowDown);
 		
 	}
 

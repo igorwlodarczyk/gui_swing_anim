@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -15,6 +16,7 @@ public class AnimPanel extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	ArrayList<Figura> figList = new ArrayList<>();
 
 	// bufor
 	Image image;
@@ -23,7 +25,7 @@ public class AnimPanel extends JPanel implements ActionListener {
 	// wykreslacz bufora
 	Graphics2D buffer;
 
-	private int delay = 70;
+	private int delay = 30;
 
 	private Timer timer;
 
@@ -50,7 +52,9 @@ public class AnimPanel extends JPanel implements ActionListener {
 		Figura fig = (numer++ % 2 == 0) ? new Kwadrat(buffer, delay, getWidth(), getHeight())
 				: new Elipsa(buffer, delay, getWidth(), getHeight());
 		timer.addActionListener(fig);
-		new Thread(fig).start();
+		figList.add(fig);
+		Thread thread = new Thread(fig);
+		thread.start();
 	}
 
 	void animate() {
@@ -58,6 +62,23 @@ public class AnimPanel extends JPanel implements ActionListener {
 			timer.stop();
 		} else {
 			timer.start();
+		}
+	}
+
+	void speedUp() {
+		delay -= 2;
+		if(delay < 1){
+			delay = 1;
+		}
+		for (Figura fig : figList) {
+			fig.getDelay().set(delay);
+		}
+	}
+
+	void slowDown() {
+		delay += 2;
+		for (Figura fig : figList) {
+			fig.getDelay().set(delay);
 		}
 	}
 

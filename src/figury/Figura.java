@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author tb
@@ -33,7 +34,8 @@ public abstract class Figura implements Runnable, ActionListener/*, Shape*/ {
 	private double sf;
 	// kat obrotu
 	private double an;
-	private int delay;
+	// private int delay;
+	private AtomicInteger delay = new AtomicInteger();
 	private int width;
 	private int height;
 	private Color clr;
@@ -41,7 +43,7 @@ public abstract class Figura implements Runnable, ActionListener/*, Shape*/ {
 	protected static final Random rand = new Random();
 
 	public Figura(Graphics2D buf, int del, int w, int h) {
-		delay = del;
+		delay.set(del);
 		buffer = buf;
 		width = w;
 		height = h;
@@ -68,7 +70,7 @@ public abstract class Figura implements Runnable, ActionListener/*, Shape*/ {
 			// przygotowanie nastepnego kadru
 			shape = nextFrame();
 			try {
-				Thread.sleep(delay);
+				Thread.sleep(delay.get());
 			} catch (InterruptedException e) {
 			}
 		}
@@ -111,4 +113,7 @@ public abstract class Figura implements Runnable, ActionListener/*, Shape*/ {
 		buffer.draw(shape);
 	}
 
+	public AtomicInteger getDelay() {
+		return delay;
+	}
 }
