@@ -36,6 +36,7 @@ public abstract class Figura implements Runnable, ActionListener/*, Shape*/ {
 	private double an;
 	// private int delay;
 	private AtomicInteger delay = new AtomicInteger();
+	private AtomicInteger move = new AtomicInteger();
 	private int width;
 	private int height;
 	private Color clr;
@@ -47,6 +48,7 @@ public abstract class Figura implements Runnable, ActionListener/*, Shape*/ {
 		buffer = buf;
 		width = w;
 		height = h;
+		move.set(1);
 
 		dx = 1 + rand.nextInt(5);
 		dy = 1 + rand.nextInt(5);
@@ -85,21 +87,32 @@ public abstract class Figura implements Runnable, ActionListener/*, Shape*/ {
 		int cx = bounds.x + bounds.width / 2;
 		int cy = bounds.y + bounds.height / 2;
 		// odbicie
-		if (cx < 0 || cx > width)
-			dx = -dx;
-		if (cy < 0 || cy > height)
-			dy = -dy;
-		// zwiekszenie lub zmniejszenie
-		if (bounds.height > height / 3 || bounds.height < 10)
-			sf = 1 / sf;
-		// konstrukcja przeksztalcenia
-		aft.translate(cx, cy);
-		aft.scale(sf, sf);
-		aft.rotate(an);
-		aft.translate(-cx, -cy);
-		aft.translate(dx, dy);
-		// przeksztalcenie obiektu
-		area.transform(aft);
+		if(!(bounds.x+dx>=0 && bounds.x+bounds.width+dx<=width && bounds.y+dy>=0 && bounds.y+bounds.height+dy<=height)) {
+			if(bounds.y+dy < 0 || bounds.y+dy > 300)
+			{
+				dy = -dy;
+			}
+			if(bounds.x+dx < 0 || bounds.x+dx > 400){
+				dx = -dx;
+			}
+
+
+		}
+		if(move.get() == 1)
+		{
+			// zwiekszenie lub zmniejszenie
+			if (bounds.height > height / 3 || bounds.height < 10)
+				sf = 1 / sf;
+			// konstrukcja przeksztalcenia
+			aft.translate(cx, cy);
+			aft.scale(sf, sf);
+			aft.rotate(an);
+			aft.translate(-cx, -cy);
+			aft.translate(dx, dy);
+			// przeksztalcenie obiektu
+			area.transform(aft);
+		}
+
 		return area;
 	}
 
@@ -115,5 +128,9 @@ public abstract class Figura implements Runnable, ActionListener/*, Shape*/ {
 
 	public AtomicInteger getDelay() {
 		return delay;
+	}
+
+	public AtomicInteger getMove() {
+		return move;
 	}
 }

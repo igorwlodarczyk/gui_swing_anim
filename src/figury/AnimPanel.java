@@ -60,8 +60,14 @@ public class AnimPanel extends JPanel implements ActionListener {
 	void animate() {
 		if (timer.isRunning()) {
 			timer.stop();
+			for (Figura fig : figList) {
+				fig.getMove().set(0);
+			}
 		} else {
 			timer.start();
+			for (Figura fig : figList) {
+				fig.getMove().set(1);
+			}
 		}
 	}
 
@@ -86,5 +92,9 @@ public class AnimPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		device.drawImage(image, 0, 0, null);
 		buffer.clearRect(0, 0, getWidth(), getHeight());
+	}
+
+	public int getDelay(){
+		return delay;
 	}
 }
